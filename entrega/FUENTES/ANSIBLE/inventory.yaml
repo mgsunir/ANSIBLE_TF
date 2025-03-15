@@ -1,0 +1,16 @@
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+  children:
+    azure:
+      hosts:
+        vm-azure:
+      vars:
+        ansible_user: ansible
+          #ansible_ssh_private_key_file: acceso.pem
+      vars_files:
+        - variables_general.yaml
+        - variables_acr.yaml
+ 
+

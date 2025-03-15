@@ -1,0 +1,74 @@
+---
+   - include_vars: variables_general_local.yaml
+   - include_vars: variables_acr.yaml
+
+   - name: Set teh correct Time Time Zone, i setups it
+     timezone:
+       name: "{{zone}}"
+     become: yes
+     tags:
+       - Entorno_Local
+
+         #   - name: install pip3
+         #         #     apt:
+         #       name: "python3-pip"
+         #       state: present
+         #     become: yes
+         #     tags:
+         #- Entorno_Local
+
+   - name: Removes entry of /etc/host vm-azure
+     ansible.builtin.lineinfile:
+       path: /etc/hosts
+       state: absent
+       regexp: '\d+.\d+.\d+.\d+.*vm-azure'
+     become: yes
+     ignore_errors: True
+     tags:
+       - Entorno_Local
+
+   - name: Add entry of /etc/host vm-azure
+     ansible.builtin.lineinfile:
+       path: /etc/hosts
+       state: present
+       line: "{{vm_ip}} {{alias_hosts}}"
+     become: yes
+     tags:
+       - Entorno_Local
+
+
+   - name: Pull an image
+     containers.podman.podman_image:
+       name: "{{apps[0].pathi}}"
+     tags:
+       - Entorno_Local
+
+
+   - name: Restart a container
+     containers.podman.podman_container:
+       name: "{{container_name}}"
+       image: "{{apps[0].pathi}}"
+       state: started
+       restart: true
+       restart_policy: "always"
+       ports:
+         - "80:80"
+     become: yes
+     tags:
+       - Entorno_Local
+
+   - name: Check that you can connect (GET) to a page and it returns a status 200
+     ansible.builtin.uri:
+       url: "http://localhost"
+       return_content: true
+       status_code: 200
+     register: this
+     tags:
+       - Entorno_Local
+
+   - name: Visualizar salida CURL
+     ansible.builtin.debug:
+       msg: "{{this.content}}"
+     tags:
+       - Entorno_Local
+                                                             

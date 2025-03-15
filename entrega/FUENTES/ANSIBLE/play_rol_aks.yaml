@@ -1,0 +1,38 @@
+---
+
+# tasks file for ROLE_AKS
+#
+#
+#- name: Segundo Playbook amos a poir los objetos
+#  vars_files:
+#    - variables_general.yaml
+#    - variables_acr.yaml
+#
+#  vars:
+#    #   repositorio: terraformacruniracr1.azurecr.io
+
+
+- name: Primer play
+  hosts: vm-azure
+  remote_user: ansible
+  vars: 
+    kube_config: ~/.kube/config
+
+      #  roles:
+      #- ROLE_AKS
+      #remote_user: ansible
+
+  pre_tasks: 
+    - name: Tarea Previa  
+      debug:
+        msg: "PRE TASK"
+
+  tasks:
+    - name: Incluyendo Role
+      include_role:
+        name: ROLE_AKS
+
+  post_tasks: 
+    - name: Tarea POSTERIOR
+      debug:
+        msg: "POST TASK"
