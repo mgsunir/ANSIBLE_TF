@@ -284,25 +284,25 @@ resource "kubernetes_persistent_volume_v1" "pv-nginx" {
   }
 }
 
-# resource "kubernetes_persistent_volume_claim" "pvc-nginx" {
-#     depends_on = [ 
-#     kubernetes_namespace.k8s_ns
-#     ]
-#   metadata {
-#     name = "pvc-nginx"
-#     namespace = var.namespace_terraform
-#   }
-#   spec {
-#     storage_class_name = "managed-csi"
-#     access_modes = ["ReadWriteMany"]
-#     resources {
-#       requests = {
-#         storage = "1Gi"
-#       }
-#     }    
-#     volume_name = "${kubernetes_persistent_volume_v1.pv-nginx.metadata.0.name}"
-#   }
-# }
+resource "kubernetes_persistent_volume_claim" "pvc-nginx" {
+     depends_on = [ 
+     kubernetes_namespace.k8s_ns
+     ]
+   metadata {
+     name = "pvc-nginx"
+     namespace = var.namespace_terraform
+   }
+   spec {
+     storage_class_name = "managed-csi"
+     access_modes = ["ReadWriteMany"]
+     resources {
+       requests = {
+         storage = "1Gi"
+       }
+     }    
+     volume_name = "${kubernetes_persistent_volume_v1.pv-nginx.metadata.0.name}"
+   }
+ }
 
 
 
