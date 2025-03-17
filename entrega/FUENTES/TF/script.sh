@@ -4,7 +4,7 @@ export HOME_ANSIBLE=/home/${USER}
 
 sudo useradd -m -s /bin/bash -g sudo ${USER} 
 sudo usermod -aG sudo ${USER}
-sudo echo "ansible:manolo88" | sudo chpasswd
+sudo echo "ansible:xxxxx" | sudo chpasswd
 #echo "$USER     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 sudo apt-get update
