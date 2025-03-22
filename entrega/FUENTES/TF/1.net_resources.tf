@@ -128,18 +128,7 @@ resource "azurerm_network_security_group" "sgpractica2" {
     destination_address_prefix = "*"
      description = " Por si he de entrar por https"
   }
-   security_rule    {
-    name                       = "httpso"
-    priority                   = 1104
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-    description = " Por si he de salir saliente"
-  }
+
 
 }
 
