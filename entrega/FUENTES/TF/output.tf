@@ -73,6 +73,6 @@ resource "local_file" "var_general" {
 resource "local_file" "kubeconfig" {
   depends_on   = [azurerm_kubernetes_cluster.example]
   content      = azurerm_kubernetes_cluster.example.kube_config_raw
-  filename     = "c:\\users\\manuel.gutierrez\\.kube\\config"
+  filename     = ""~/.ssh/.kube/config"
   
 }
