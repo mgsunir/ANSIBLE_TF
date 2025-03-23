@@ -1,0 +1,4 @@
+---
+# vars file for ROLE_LOCAL
+container: nginx_test
+alias_hosts: vm-azure
