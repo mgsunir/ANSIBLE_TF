@@ -1,0 +1,718 @@
+terraform@mgs:~$ az login
+To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code CH2DT47ZN to authenticate.
+
+Retrieving tenants and subscriptions for the selection...
+
+[Tenant and subscription selection]
+
+No     Subscription name    Subscription ID                       Tenant
+-----  -------------------  ------------------------------------  --------
+[1] *  Azure for Students   088e08b8-0a3f-479a-86cc-753e92bcf726  UNIR
+
+The default is marked with an *; the default tenant is 'UNIR' and subscription is 'Azure for Students' (088e08b8-0a3f-479a-86cc-753e92bcf726).
+
+Select a subscription and tenant (Type a number or Enter for no changes): 1
+
+Tenant: UNIR
+Subscription: Azure for Students (088e08b8-0a3f-479a-86cc-753e92bcf726)
+
+[Announcements]
+With the new Azure CLI login experience, you can select the subscription you want to use more easily. Learn more about it and its configuration at https://go.microsoft.com/fwlink/?linkid=2271236
+
+If you encounter any problem, please open an issue at https://aka.ms/azclibug
+
+[Warning] The login output has been updated. Please be aware that it no longer displays the full list of available subscriptions by default.
+
+terraform@mgs:~$
+
+
+terraform@mgs:~/TF/TF3$ ls
+0.provider.tf       2.storage.tf         4.main.tf        6.keyvault.tf  copia_ficheros_variables.ksh   general.tmpl  pvc-azuredisk-csi.yaml  ssh.tf              variables_acr.yaml      variables.tf
+1.net_resources.tf  3.acr_kubernetes.tf  5.kubernetes.tf  ANSIBLE_TF     copia_ficherros_variables.ksh  output.tf     script.sh               variables_acr.tmpl  variables_general.yaml
+terraform@mgs:~/TF/TF3$ terraform init
+Initializing the backend...
+Initializing provider plugins...
+- Finding latest version of hashicorp/local...
+- Finding latest version of hashicorp/null...
+- Finding hashicorp/azurerm versions matching "~> 3.0"...
+- Finding hashicorp/random versions matching "~> 3.0"...
+- Finding azure/azapi versions matching "~> 1.5"...
+- Finding latest version of hashicorp/kubernetes...
+- Installing hashicorp/kubernetes v2.36.0...
+- Installed hashicorp/kubernetes v2.36.0 (signed by HashiCorp)
+- Installing hashicorp/local v2.5.2...
+- Installed hashicorp/local v2.5.2 (signed by HashiCorp)
+- Installing hashicorp/null v3.2.3...
+- Installed hashicorp/null v3.2.3 (signed by HashiCorp)
+- Installing hashicorp/azurerm v3.117.1...
+- Installed hashicorp/azurerm v3.117.1 (signed by HashiCorp)
+- Installing hashicorp/random v3.7.1...
+- Installed hashicorp/random v3.7.1 (signed by HashiCorp)
+- Installing azure/azapi v1.15.0...
+- Installed azure/azapi v1.15.0 (signed by a HashiCorp partner, key ID 6F0B91BDE98478CF)
+Partner and community providers are signed by their developers.
+If you'd like to know more about provider signing, you can read about it here:
+https://www.terraform.io/docs/cli/plugins/signing.html
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+terraform@mgs:~/TF/TF3$
+
+
+terraform@mgs:~/TF/TF3$
+terraform@mgs:~/TF/TF3$ terraform plan
+data.azurerm_client_config.current: Reading...
+data.azurerm_client_config.current: Read complete after 0s [id=Y2xpZW50Q29uZmlncy9jbGllbnRJZD0wNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDY7b2JqZWN0SWQ9YjhjOTZmZjAtNzFjMC00NDE2LTgzNzQtMzU4N2NjMTQwNmE2O3N1YnNjcmlwdGlvbklkPTA4OGUwOGI4LTBhM2YtNDc5YS04NmNjLTc1M2U5MmJjZjcyNjt0ZW5hbnRJZD04OTk3ODlkYy0yMDJmLTQ0YjQtODQ3Mi1hNmQ0MGY5ZWI0NDA=]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_container_registry.example will be created
+  + resource "azurerm_container_registry" "example" {
+      + admin_enabled                 = true
+      + admin_password                = (sensitive value)
+      + admin_username                = (known after apply)
+      + encryption                    = (known after apply)
+      + export_policy_enabled         = true
+      + id                            = (known after apply)
+      + location                      = "westeurope"
+      + login_server                  = (known after apply)
+      + name                          = "terraformacr202503"
+      + network_rule_bypass_option    = "AzureServices"
+      + network_rule_set              = (known after apply)
+      + public_network_access_enabled = true
+      + resource_group_name           = "main_resources"
+      + retention_policy              = (known after apply)
+      + sku                           = "Basic"
+      + tags                          = {
+          + "Ceco"        = "UNIR"
+          + "Environment" = "Test"
+        }
+      + trust_policy                  = (known after apply)
+      + zone_redundancy_enabled       = false
+    }
+
+  # azurerm_key_vault.terra_vault17 will be created
+  + resource "azurerm_key_vault" "terra_vault17" {
+      + access_policy                 = [
+          + {
+              + application_id          = "04b07795-8ddb-461a-bbee-02f9e1bf7b46"
+              + certificate_permissions = [
+                  + "Get",
+                  + "List",
+                  + "Update",
+                  + "Create",
+                  + "Import",
+                  + "Delete",
+                  + "Recover",
+                  + "Backup",
+                  + "Restore",
+                  + "DeleteIssuers",
+                  + "GetIssuers",
+                  + "ListIssuers",
+                  + "ManageContacts",
+                  + "ManageIssuers",
+                  + "SetIssuers",
+                ]
+              + key_permissions         = [
+                  + "Get",
+                  + "List",
+                  + "Update",
+                  + "Create",
+                  + "Import",
+                  + "Delete",
+                  + "Recover",
+                  + "Backup",
+                  + "Restore",
+                ]
+              + object_id               = "b8c96ff0-71c0-4416-8374-3587cc1406a6"
+              + secret_permissions      = [
+                  + "Get",
+                  + "List",
+                  + "Delete",
+                  + "Recover",
+                  + "Backup",
+                  + "Restore",
+                  + "Set",
+                  + "Purge",
+                ]
+              + tenant_id               = "899789dc-202f-44b4-8472-a6d40f9eb440"
+            },
+        ]
+      + id                            = (known after apply)
+      + location                      = "westeurope"
+      + name                          = (known after apply)
+      + public_network_access_enabled = true
+      + purge_protection_enabled      = false
+      + resource_group_name           = "main_resources"
+      + sku_name                      = "standard"
+      + soft_delete_retention_days    = 90
+      + tags                          = {
+          + "Ceco"        = "UNIR"
+          + "Environment" = "Test"
+        }
+      + tenant_id                     = "899789dc-202f-44b4-8472-a6d40f9eb440"
+      + vault_uri                     = (known after apply)
+
+      + contact (known after apply)
+
+      + network_acls (known after apply)
+    }
+
+  # azurerm_key_vault_secret.terra_secret48 will be created
+  + resource "azurerm_key_vault_secret" "terra_secret48" {
+      + id                      = (known after apply)
+      + key_vault_id            = (known after apply)
+      + name                    = (known after apply)
+      + resource_id             = (known after apply)
+      + resource_versionless_id = (known after apply)
+      + tags                    = {
+          + "Ceco"        = "UNIR"
+          + "Environment" = "Test"
+        }
+      + value                   = (sensitive value)
+      + version                 = (known after apply)
+      + versionless_id          = (known after apply)
+    }
+
+  # azurerm_kubernetes_cluster.example will be created
+  + resource "azurerm_kubernetes_cluster" "example" {
+      + api_server_authorized_ip_ranges     = (known after apply)
+      + current_kubernetes_version          = (known after apply)
+      + dns_prefix                          = "terraformk8s"
+      + fqdn                                = (known after apply)
+      + http_application_routing_zone_name  = (known after apply)
+      + id                                  = (known after apply)
+      + image_cleaner_enabled               = false
+      + image_cleaner_interval_hours        = 48
+      + kube_admin_config                   = (sensitive value)
+      + kube_admin_config_raw               = (sensitive value)
+      + kube_config                         = (sensitive value)
+      + kube_config_raw                     = (sensitive value)
+      + kubernetes_version                  = (known after apply)
+      + location                            = "westeurope"
+      + name                                = "terraformk8s"
+      + node_resource_group                 = (known after apply)
+      + node_resource_group_id              = (known after apply)
+      + oidc_issuer_url                     = (known after apply)
+      + portal_fqdn                         = (known after apply)
+      + private_cluster_enabled             = false
+      + private_cluster_public_fqdn_enabled = false
+      + private_dns_zone_id                 = (known after apply)
+      + private_fqdn                        = (known after apply)
+      + public_network_access_enabled       = true
+      + resource_group_name                 = "main_resources"
+      + role_based_access_control_enabled   = true
+      + run_command_enabled                 = true
+      + sku_tier                            = "Free"
+      + support_plan                        = "KubernetesOfficial"
+      + tags                                = {
+          + "Ceco"        = "UNIR"
+          + "Environment" = "Test"
+        }
+      + workload_identity_enabled           = false
+
+      + api_server_access_profile (known after apply)
+
+      + auto_scaler_profile (known after apply)
+
+      + default_node_pool {
+          + enable_auto_scaling  = false
+          + kubelet_disk_type    = (known after apply)
+          + max_pods             = 110
+          + name                 = "poolmin"
+          + node_count           = 1
+          + node_labels          = (known after apply)
+          + orchestrator_version = (known after apply)
+          + os_disk_size_gb      = 40
+          + os_disk_type         = "Managed"
+          + os_sku               = (known after apply)
+          + scale_down_mode      = "Delete"
+          + type                 = "VirtualMachineScaleSets"
+          + ultra_ssd_enabled    = false
+          + vm_size              = "Standard_B2s"
+          + workload_runtime     = (known after apply)
+        }
+
+      + identity {
+          + principal_id = (known after apply)
+          + tenant_id    = (known after apply)
+          + type         = "SystemAssigned"
+        }
+
+      + kubelet_identity (known after apply)
+
+      + network_profile (known after apply)
+
+      + windows_profile (known after apply)
+    }
+
+  # azurerm_linux_virtual_machine.practica_vm will be created
+  + resource "azurerm_linux_virtual_machine" "practica_vm" {
+      + admin_username                                         = "azureadmin"
+      + allow_extension_operations                             = true
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = "practica"
+      + custom_data                                            = (sensitive value)
+      + disable_password_authentication                        = true
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "westeurope"
+      + max_bid_price                                          = -1
+      + name                                                   = "practica_vm"
+      + network_interface_ids                                  = (known after apply)
+      + patch_assessment_mode                                  = "ImageDefault"
+      + patch_mode                                             = "ImageDefault"
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = true
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "main_resources"
+      + size                                                   = "Standard_B2ls_v2"
+      + tags                                                   = {
+          + "Ceco"        = "UNIR"
+          + "Environment" = "Test"
+        }
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = false
+
+      + admin_ssh_key {
+          + public_key = <<-EOT
+                ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDQxMQkSmoow7JmZTZFQ4hBAYBA9+IVYvkEBCzDyECZ6PpI8TbVwL1XiKhBrElC2qNxGl4mdXVmBwqEa+7O4jIUfF9xi3uc5U8Fb3FmNY+mrpAjzcD+G49cuubHIiCrfcexi8ed3guhORJ3XkeuWJ6qF0mXYxXzbwFIg27JEE4W107tx0YM80E80StiBNiPJnh69fshqviDUjCAaE4K/vPI5GVWZ6mSWUDMNcC5ZeCNt2qKM678lae5zx/AiwgPzIVYH7YjtFt59SQpeOP+GuPr/t3gADSo5bl2A7aXrJT+De74dQXxmtxSeIEh+KckaUNoH3YD/Spy9OXZtP+UsUgffkNeDOlpZq3BDfaxbYaQepqQwDZQMah8Z4qcAEH966S9cyQRPHuejvfAhBXGW6bMaEErAO3zv+hgOSZ4v7JR4gwLmgySF84XZPMt2RS7mn422ob4LttoE+OkqQhNlfIvwEm19iD150uzwbvSjRoJSaqHYr8W9vi9w0i1BpKHZQc= terraform@mgs
+            EOT
+          + username   = "azureadmin"
+        }
+
+      + boot_diagnostics {
+          + storage_account_uri = (known after apply)
+        }
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + name                      = "myOsDisk"
+          + storage_account_type      = "Premium_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-jammy"
+          + publisher = "Canonical"
+          + sku       = "22_04-lts-gen2"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_network_interface.vm1nic will be created
+  + resource "azurerm_network_interface" "vm1nic" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = "westeurope"
+      + mac_address                    = (known after apply)
+      + name                           = "vm1-nic"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "main_resources"
+      + tags                           = {
+          + "Ceco"        = "UNIR"
+          + "Environment" = "Test"
+        }
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "ipconfig1"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = "10.0.1.10"
+          + private_ip_address_allocation                      = "Static"
+          + private_ip_address_version                         = "IPv4"
+          + public_ip_address_id                               = (known after apply)
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # azurerm_network_interface_security_group_association.example will be created
+  + resource "azurerm_network_interface_security_group_association" "example" {
+      + id                        = (known after apply)
+      + network_interface_id      = (known after apply)
+      + network_security_group_id = (known after apply)
+    }
+
+  # azurerm_network_security_group.sgpractica2 will be created
+  + resource "azurerm_network_security_group" "sgpractica2" {
+      + id                  = (known after apply)
+      + location            = "westeurope"
+      + name                = "sgpractica2"
+      + resource_group_name = "main_resources"
+      + security_rule       = [
+          + {
+              + access                                     = "Allow"
+              + description                                = " Entrante 22 ssh"
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "22"
+              + destination_port_ranges                    = []
+              + direction                                  = "Inbound"
+              + name                                       = "SSH"
+              + priority                                   = 1001
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "*"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+            },
+          + {
+              + access                                     = "Allow"
+              + description                                = " Por si he de entrar por https"
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "443"
+              + destination_port_ranges                    = []
+              + direction                                  = "Inbound"
+              + name                                       = "https"
+              + priority                                   = 1103
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "*"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+            },
+          + {
+              + access                                     = "Allow"
+              + description                                = " Por si he de entrar por https"
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "80"
+              + destination_port_ranges                    = []
+              + direction                                  = "Inbound"
+              + name                                       = "http"
+              + priority                                   = 1102
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "*"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+            },
+        ]
+    }
+
+  # azurerm_public_ip.publicip_1 will be created
+  + resource "azurerm_public_ip" "publicip_1" {
+      + allocation_method       = "Dynamic"
+      + ddos_protection_mode    = "VirtualNetworkInherited"
+      + fqdn                    = (known after apply)
+      + id                      = (known after apply)
+      + idle_timeout_in_minutes = 4
+      + ip_address              = (known after apply)
+      + ip_version              = "IPv4"
+      + location                = "westeurope"
+      + name                    = "pip1"
+      + resource_group_name     = "main_resources"
+      + sku                     = "Basic"
+      + sku_tier                = "Regional"
+      + tags                    = {
+          + "Ceco"        = "UNIR"
+          + "Environment" = "Test"
+        }
+    }
+
+  # azurerm_resource_group.recursos will be created
+  + resource "azurerm_resource_group" "recursos" {
+      + id       = (known after apply)
+      + location = "westeurope"
+      + name     = "main_resources"
+      + tags     = {
+          + "Ceco"        = "UNIR"
+          + "Environment" = "Test"
+        }
+    }
+
+  # azurerm_role_assignment.example will be created
+  + resource "azurerm_role_assignment" "example" {
+      + id                               = (known after apply)
+      + name                             = (known after apply)
+      + principal_id                     = (known after apply)
+      + principal_type                   = (known after apply)
+      + role_definition_id               = (known after apply)
+      + role_definition_name             = "AcrPull"
+      + scope                            = (known after apply)
+      + skip_service_principal_aad_check = true
+    }
+
+  # azurerm_storage_account.diag0lab0unir0022032 will be created
+  + resource "azurerm_storage_account" "diag0lab0unir0022032" {
+      + access_tier                        = (known after apply)
+      + account_kind                       = "StorageV2"
+      + account_replication_type           = "LRS"
+      + account_tier                       = "Standard"
+      + allow_nested_items_to_be_public    = true
+      + cross_tenant_replication_enabled   = true
+      + default_to_oauth_authentication    = false
+      + dns_endpoint_type                  = "Standard"
+      + enable_https_traffic_only          = (known after apply)
+      + https_traffic_only_enabled         = (known after apply)
+      + id                                 = (known after apply)
+      + infrastructure_encryption_enabled  = false
+      + is_hns_enabled                     = false
+      + large_file_share_enabled           = (known after apply)
+      + local_user_enabled                 = true
+      + location                           = "westeurope"
+      + min_tls_version                    = "TLS1_2"
+      + name                               = (known after apply)
+      + nfsv3_enabled                      = false
+      + primary_access_key                 = (sensitive value)
+      + primary_blob_connection_string     = (sensitive value)
+      + primary_blob_endpoint              = (known after apply)
+      + primary_blob_host                  = (known after apply)
+      + primary_blob_internet_endpoint     = (known after apply)
+      + primary_blob_internet_host         = (known after apply)
+      + primary_blob_microsoft_endpoint    = (known after apply)
+      + primary_blob_microsoft_host        = (known after apply)
+      + primary_connection_string          = (sensitive value)
+      + primary_dfs_endpoint               = (known after apply)
+      + primary_dfs_host                   = (known after apply)
+      + primary_dfs_internet_endpoint      = (known after apply)
+      + primary_dfs_internet_host          = (known after apply)
+      + primary_dfs_microsoft_endpoint     = (known after apply)
+      + primary_dfs_microsoft_host         = (known after apply)
+      + primary_file_endpoint              = (known after apply)
+      + primary_file_host                  = (known after apply)
+      + primary_file_internet_endpoint     = (known after apply)
+      + primary_file_internet_host         = (known after apply)
+      + primary_file_microsoft_endpoint    = (known after apply)
+      + primary_file_microsoft_host        = (known after apply)
+      + primary_location                   = (known after apply)
+      + primary_queue_endpoint             = (known after apply)
+      + primary_queue_host                 = (known after apply)
+      + primary_queue_microsoft_endpoint   = (known after apply)
+      + primary_queue_microsoft_host       = (known after apply)
+      + primary_table_endpoint             = (known after apply)
+      + primary_table_host                 = (known after apply)
+      + primary_table_microsoft_endpoint   = (known after apply)
+      + primary_table_microsoft_host       = (known after apply)
+      + primary_web_endpoint               = (known after apply)
+      + primary_web_host                   = (known after apply)
+      + primary_web_internet_endpoint      = (known after apply)
+      + primary_web_internet_host          = (known after apply)
+      + primary_web_microsoft_endpoint     = (known after apply)
+      + primary_web_microsoft_host         = (known after apply)
+      + public_network_access_enabled      = true
+      + queue_encryption_key_type          = "Service"
+      + resource_group_name                = "main_resources"
+      + secondary_access_key               = (sensitive value)
+      + secondary_blob_connection_string   = (sensitive value)
+      + secondary_blob_endpoint            = (known after apply)
+      + secondary_blob_host                = (known after apply)
+      + secondary_blob_internet_endpoint   = (known after apply)
+      + secondary_blob_internet_host       = (known after apply)
+      + secondary_blob_microsoft_endpoint  = (known after apply)
+      + secondary_blob_microsoft_host      = (known after apply)
+      + secondary_connection_string        = (sensitive value)
+      + secondary_dfs_endpoint             = (known after apply)
+      + secondary_dfs_host                 = (known after apply)
+      + secondary_dfs_internet_endpoint    = (known after apply)
+      + secondary_dfs_internet_host        = (known after apply)
+      + secondary_dfs_microsoft_endpoint   = (known after apply)
+      + secondary_dfs_microsoft_host       = (known after apply)
+      + secondary_file_endpoint            = (known after apply)
+      + secondary_file_host                = (known after apply)
+      + secondary_file_internet_endpoint   = (known after apply)
+      + secondary_file_internet_host       = (known after apply)
+      + secondary_file_microsoft_endpoint  = (known after apply)
+      + secondary_file_microsoft_host      = (known after apply)
+      + secondary_location                 = (known after apply)
+      + secondary_queue_endpoint           = (known after apply)
+      + secondary_queue_host               = (known after apply)
+      + secondary_queue_microsoft_endpoint = (known after apply)
+      + secondary_queue_microsoft_host     = (known after apply)
+      + secondary_table_endpoint           = (known after apply)
+      + secondary_table_host               = (known after apply)
+      + secondary_table_microsoft_endpoint = (known after apply)
+      + secondary_table_microsoft_host     = (known after apply)
+      + secondary_web_endpoint             = (known after apply)
+      + secondary_web_host                 = (known after apply)
+      + secondary_web_internet_endpoint    = (known after apply)
+      + secondary_web_internet_host        = (known after apply)
+      + secondary_web_microsoft_endpoint   = (known after apply)
+      + secondary_web_microsoft_host       = (known after apply)
+      + sftp_enabled                       = false
+      + shared_access_key_enabled          = true
+      + table_encryption_key_type          = "Service"
+      + tags                               = {
+          + "Ceco"        = "UNIR"
+          + "Environment" = "Test"
+        }
+
+      + blob_properties (known after apply)
+
+      + network_rules (known after apply)
+
+      + queue_properties (known after apply)
+
+      + routing (known after apply)
+
+      + share_properties (known after apply)
+
+      + static_website (known after apply)
+    }
+
+  # azurerm_storage_container.terraform-container will be created
+  + resource "azurerm_storage_container" "terraform-container" {
+      + container_access_type             = "private"
+      + default_encryption_scope          = (known after apply)
+      + encryption_scope_override_enabled = true
+      + has_immutability_policy           = (known after apply)
+      + has_legal_hold                    = (known after apply)
+      + id                                = (known after apply)
+      + metadata                          = (known after apply)
+      + name                              = (known after apply)
+      + resource_manager_id               = (known after apply)
+      + storage_account_name              = (known after apply)
+    }
+
+  # azurerm_subnet.backend will be created
+  + resource "azurerm_subnet" "backend" {
+      + address_prefixes                               = [
+          + "10.0.1.0/24",
+        ]
+      + default_outbound_access_enabled                = true
+      + enforce_private_link_endpoint_network_policies = (known after apply)
+      + enforce_private_link_service_network_policies  = (known after apply)
+      + id                                             = (known after apply)
+      + name                                           = "terraformsubnet"
+      + private_endpoint_network_policies              = (known after apply)
+      + private_endpoint_network_policies_enabled      = (known after apply)
+      + private_link_service_network_policies_enabled  = (known after apply)
+      + resource_group_name                            = "main_resources"
+      + virtual_network_name                           = "practica-network"
+    }
+
+  # azurerm_subnet.frontend will be created
+  + resource "azurerm_subnet" "frontend" {
+      + address_prefixes                               = [
+          + "10.0.3.0/24",
+        ]
+      + default_outbound_access_enabled                = true
+      + enforce_private_link_endpoint_network_policies = (known after apply)
+      + enforce_private_link_service_network_policies  = (known after apply)
+      + id                                             = (known after apply)
+      + name                                           = "frontend"
+      + private_endpoint_network_policies              = (known after apply)
+      + private_endpoint_network_policies_enabled      = (known after apply)
+      + private_link_service_network_policies_enabled  = (known after apply)
+      + resource_group_name                            = "main_resources"
+      + virtual_network_name                           = "practica-network"
+    }
+
+  # azurerm_virtual_network.practica will be created
+  + resource "azurerm_virtual_network" "practica" {
+      + address_space       = [
+          + "10.0.0.0/16",
+        ]
+      + dns_servers         = (known after apply)
+      + guid                = (known after apply)
+      + id                  = (known after apply)
+      + location            = "westeurope"
+      + name                = "practica-network"
+      + resource_group_name = "main_resources"
+      + subnet              = (known after apply)
+      + tags                = {
+          + "Ceco"        = "UNIR"
+          + "Environment" = "Test"
+        }
+    }
+
+  # local_file.kubeconfig will be created
+  + resource "local_file" "kubeconfig" {
+      + content              = (sensitive value)
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "/home/terraform/.kube/config"
+      + id                   = (known after apply)
+    }
+
+  # local_file.var_acr will be created
+  + resource "local_file" "var_acr" {
+      + content              = (sensitive value)
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "variables_acr.yaml"
+      + id                   = (known after apply)
+    }
+
+  # local_file.var_general will be created
+  + resource "local_file" "var_general" {
+      + content              = (known after apply)
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "variables_general.yaml"
+      + id                   = (known after apply)
+    }
+
+  # null_resource.copy_authorized_keys will be created
+  + resource "null_resource" "copy_authorized_keys" {
+      + id = (known after apply)
+    }
+
+Plan: 20 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + acr_login_server    = (sensitive value)
+  + acr_password        = (sensitive value)
+  + acr_username        = (known after apply)
+  + public_ip           = (known after apply)
+  + vm_id               = (known after apply)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+terraform@mgs:~/TF/TF3$
